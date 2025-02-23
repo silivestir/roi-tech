@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket-based Voice Call App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        #incomingCall {
+            display: none;
+        }
+
+        #callDuration {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        #iceConnectionState {
+            margin-top: 20px;
+            font-size: 16px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Voice Call App</h2>
+        <button id="callButton" disabled>Call User</button>
+        <div id="incomingCall" style="display: none;">
+            <p>Incoming Call...</p>
+            <button id="acceptButton">Accept</button>
+            <button id="rejectButton">Reject</button>
+        </div>
+        <p id="callStatus"></p>
+        <audio id="remoteAudio" controls autoplay></audio>
+        <div id="callDuration" style="display: none;">00:00</div>
+        <div id="iceConnectionState">ICE Connection State: Waiting...</div>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        let localStream;
+        let peerConnection;
+        let userSocketId;
+        let remoteStream;
+        let callStartTime;
+        const ICE_SERVERS = {
+            iceServers: [
+                { urls: 'stun:jb-turn1.xirsys.com' },
+                { 
+                    urls: [
+                        'turn:jb-turn1.xirsys.com:80?transport=udp',
+                        'turn:jb-turn1.xirsys.com:3478?transport=udp',
+                        'turn:jb-turn1.xirsys.com:80?transport=tcp',
+                        'turn:jb-turn1.xirsys.com:3478?transport=tcp',
+                        'turns:jb-turn1.xirsys.com:443?transport=tcp',
+                        'turns:jb-turn1.xirsys.com:5349?transport=tcp'
+                    ],
+                    username: 'eQlHvqNiPS1IUpKp8yM5aPumWmcc9L6lESu6Ik0zP34csjBxhP2rCfjSDmooU9kdAAAAAGekeTFyb2l0ZWNo',
+                    credential: '39f53968-e468-11ef-806e-0242ac120004'
+                }
+            ]
+        };
+
+        // Request the user's media (audio)
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                localStream = stream;
+                document.getElementById('callButton').disabled = false;
+            })
+            .catch(err => {
+                console.error('Error accessing media devices: ', err);
+            });
+
+        // Handle incoming socket connections
+        socket.on('user-id', (id) => {
+            userSocketId = id;
+            console.log('User Socket ID:', userSocketId);
+        });
+
+        socket.on('incoming-call', (data) => {
+            console.log('Incoming call from:', data.callerId);
+            document.getElementById('incomingCall').style.display = 'block';
+            
+            document.getElementById('acceptButton').onclick = () => {
+                acceptCall(data.callerId);
+            };
+            
+            document.getElementById('rejectButton').onclick = () => {
+                rejectCall(data.callerId);
+            };
+        });
+
+        socket.on('call-accepted', (data) => {
+            startCall(data.calleeId);
+        });
+
+        socket.on('call-rejected', () => {
+            alert('Call Rejected');
+        });
+
+        socket.on('ice-candidate', (data) => {
+            if (data.senderId !== userSocketId) {
+                peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate))
+                    .catch(err => console.error('Error adding received ICE candidate:', err));
+            }
+        });
+
+        socket.on('offer', (data) => {
+            if (data.senderId !== userSocketId) {
+                peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer))
+                    .then(() => peerConnection.createAnswer())
+                    .then(answer => peerConnection.setLocalDescription(answer))
+                    .then(() => {
+                        socket.emit('answer', { answer: peerConnection.localDescription, targetSocketId: data.senderId });
+                    })
+                    .catch(err => console.error('Error handling offer: ', err));
+            }
+        });
+
+        socket.on('answer', (data) => {
+            if (data.senderId !== userSocketId) {
+                peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer))
+                    .catch(err => console.error('Error setting remote description: ', err));
+            }
+        });
+
+        // Button to call a user
+        document.getElementById('callButton').onclick = () => {
+            const targetSocketId = prompt('Enter the target user socket ID');
+            socket.emit('call', { targetSocketId });
+        };
+
+        // Accept the call
+        function acceptCall(callerId) {
+            document.getElementById('incomingCall').style.display = 'none';
+            createPeerConnection();
+            localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+            socket.emit('accept-call', { callerId, targetSocketId: userSocketId });
+            peerConnection.ontrack = (event) => {
+                remoteStream = event.streams[0];
+                document.getElementById('callStatus').innerText = 'Call Accepted';
+                document.getElementById('callDuration').style.display = 'block';
+                callStartTime = Date.now();
+                setInterval(updateCallDuration, 1000);
+                document.getElementById('remoteAudio').srcObject = remoteStream;
+            };
+        }
+
+        function rejectCall(callerId) {
+            document.getElementById('incomingCall').style.display = 'none';
+            socket.emit('reject-call', { callerId, targetSocketId: userSocketId });
+        }
+
+        // Create peer connection
+        function createPeerConnection() {
+            peerConnection = new RTCPeerConnection(ICE_SERVERS);
+            
+            // ICE events
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate) {
+                    socket.emit('ice-candidate', {
+                        candidate: event.candidate,
+                        targetSocketId: callerId
+                    });
+                    updateIceConnectionState("ICE Candidate Found");
+                } else {
+                    updateIceConnectionState("No more ICE Candidates");
+                }
+            };
+            
+            peerConnection.oniceconnectionstatechange = () => {
+                const state = peerConnection.iceConnectionState;
+                console.log('ICE Connection State:', state);
+                updateIceConnectionState(state); // Update the div with the current state
+
+                if (state === 'failed') {
+                    console.error('ICE connection failed');
+                } else if (state === 'connected') {
+                    console.log('ICE connection successful');
+                }
+            };
+        }
+
+        // Update call duration
+        function updateCallDuration() {
+            const elapsed = Math.floor((Date.now() - callStartTime) / 1000);
+            document.getElementById('callDuration').innerText = formatTime(elapsed);
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+</html>

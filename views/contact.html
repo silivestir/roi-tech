@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact Us - RoitechEducation</title>
+    <style>
+        /* Your provided CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #34495e;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #brand-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        #nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #nav-links a:hover {
+            background-color: #357ABD;
+            border-radius: 5px;
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        .contact-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-section h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .contact-section p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .contact-form label {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .contact-form textarea {
+            height: 150px;
+        }
+
+        .contact-form button {
+            grid-column: span 2;
+            padding: 12px 30px;
+            background-color: #34495e;
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #357ABD;
+        }
+
+        .contact-info {
+            margin-top: 40px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .contact-info h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-info p {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 1rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <div id="brand-header">RoitechEducation</div>
+        <div id="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/">Courses</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="contact-section">
+        <h1>Contact Us</h1>
+        <p>If you have any questions, feedback, or would like to get in touch with us, please feel free to use the form below or reach out through the contact information provided.</p>
+
+        <!-- Contact Form -->
+        <form class="contact-form" action="#" method="POST">
+            <div>
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" id="name" required>
+            </div>
+            <div>
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email"  id="email" required>
+            </div>
+            <div>
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="  id="subject"           subject" placeholder="Enter the subject" required>
+            </div>
+            <div>
+                <label for="message">Your Message:</label>
+                <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
+            </div>
+            <button type="submit" id="submit"> Send Message</button>
+        </form>
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <h2>Our Contact Information:</h2>
+            <p><strong>Email:</strong> support@roitech.edu</p>
+            <p><strong>Phone:</strong> +255778611556</p>
+            <p><strong>Address:</strong> 901 ,Dar -es saalam ,Tanzania</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 RoitechEducation. All rights reserved.</p>
+</footer>
+<script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ var submit = document.getElementById("submit");
+    
+    submit.addEventListener("click", function(e) {
+      e.preventDefault();
+    
+      // Get values from the form inputs
+      let name = document.getElementById("name").value;
+      let email = document.getElementById("email").value;
+      let subject = document.getElementById("subject").value;
+      let message = document.getElementById("message").value;
+    console.log(name, email, subject, message);
+      // Display an alert to confirm data gathering
+
+    
+      // Send data to the backend
+      fetch('/feedback', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+           name,
+          email,
+           subject,
+           message
+        })
+      }).then(response => response.json())
+      .then(data => {
+        console.log("Feedback submitted:", data);
+      })
+      .catch(error => {
+        console.error("Error submitting feedback:", error);
+      });
+    });
+
+</script>
+</body>
+</html>

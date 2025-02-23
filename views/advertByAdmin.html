@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>roitech education solution</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap.css" rel="stylesheet">
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="bootstrap.js"></script>
+    <link href="bootstrap.css" rel="stylesheet"> <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+   
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .create-post-container {
+            position: sticky;
+            top: 70px; /* Adjust based on navbar height */
+            z-index: 1000;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .posts-container {
+            /*overflow-y: auto;*/
+            flex-grow: 1;
+        }
+
+        .post {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .post-content {
+            flex-grow: 1;
+        }
+
+        .post-author {
+            font-weight: bold;
+        }
+
+        .post-date, .time-elapsed {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .create-post-content textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border: none;
+            resize: none;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        .create-post-content textarea:focus {
+            box-shadow: none;
+        }
+
+        .create-post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid #e6e6e6;
+        }
+
+        .create-post-actions button {
+            padding: 6px 12px;
+        }
+
+        .create-post-options {
+            display: flex;
+            align-items: center;
+        }
+
+        .create-post-options button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #1DA1F2;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .create-post-options button:hover {
+            color: #007bff;
+        }
+
+
+        .read-more {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+        }
+        .like,.comment,.report {
+          text-decoration: none;
+        }
+
+        .container-fluid {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #posts-container {
+            padding: 10px 0;
+            height: calc(100vh - 240px); /* Adjust this value based on navbar and create post height */
+            /*overflow-y: scroll;*/
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="bootstrap.min.js"></script>
+    <script src="bootstrap.js"></script>
+  </head>
+  <body>
+ <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+  <div class="container">
+    <a class="navbar-brand me-2" href="/homepage">
+      <i class="bi bi-journal-bookmark"></i> roitecheducation
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarButtonsExample" aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarButtonsExample">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/homepage">
+            <i class="bi bi-house-door"></i> Home
+          </a>
+        </li>
+        <!-- New Nav Links -->
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">
+            <i class="bi bi-person"></i> Profile
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/advert">
+            <i class="bi bi-chat-dots"></i> advertisments
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/realtime-editor">
+            <i class="bi blink-cursor"></i>real time editor
+          </a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center">
+        <span id="user-name" class="me-3"></span>
+        <button id="logout" type="button" class="btn btn-danger">
+          <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content Area -->
+<div class="content">
+    <h1 class="text-center">Roitech Admin Dashboard</h1>
+    <div class="container mt-5">
+        <!-- Active Users Counter -->
+        <div class="row">
+            <div class="col-md-6">
+            
+             
+            </div>
+            <div class="col-md-6">
+                <canvas id="activeUsersChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- Post Creation Section -->
+        <div class="create-post-container">
+            <img src="img/roitech.jpg" alt="Profile Picture" class="profile-pic">
+            <div class="create-post-content">
+                <!-- Input fields for post title and post type -->
+<select id="posttype">
+  <option value="advert">advert</option>
+  <option value="post">post</option>
+  </select>
+                <input type="text" id="post-posttitle" placeholder="Enter course title..." required>
+                <input type="text" id="post-posttype" placeholder="Enter post type (e.g., advert,post, )..." required>
+                <input type="text" id="price" placeholder="ammount  to  be  payed" required>
+                <input type="date" id="post-duration-from"  placeholder="select date range from..." > <span id="d">to </span>     <input type="date" id="post-duration-to"  placeholder="select date range from..." >
+            
+                <!-- Textarea for post content -->
+                <textarea id="post-content" placeholder="What you want to share... you can share  a post  or an advert " required></textarea>
+
+                <!-- File input for media (image/video) -->
+               <!-- Image or video upload -->
+
+                <div class="create-post-actions">
+                    <div class="create-post-options">
+                        <!-- Icons for additional options like image upload -->
+                        <button><i class="bi bi-image"></i></button> <!-- Image upload icon -->
+                        <button><i class="bi bi-emoji-smile"></i></button> <!-- Emoji icon -->
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="post-button">Post</button> <!-- Post button -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Posts Container -->
+        <div id="posts-container" class="posts-container">
+            all  this re  posts from these  site
+        </div>
+
+        <!-- Other content dynamically loaded here -->
+        <div id="dynamic-content">
+          
+        </div>
+    </div>
+</div>
+
+
+   <!--- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+
+document.getElementById("posttype").addEventListener("change",function(){
+  let  type=document.getElementById("posttype").value;
+  if(type=="post"){
+
+  
+    document.getElementById('post-duration-from').style.display="none";
+  document.getElementById('post-duration-to').style.display="none"
+   document.getElementById('price').style.display="none";
+   document.getElementById('d').style.display="none";
+
+  }
+  if(type=="advert"){
+
+  
+    document.getElementById('post-duration-from').style.display="block";
+  document.getElementById('post-duration-to').style.display="block"
+   document.getElementById('price').style.display="block";
+   document.getElementById('d').style.display="block";
+
+  }
+})
+        // Function to decode JWT token
+        function parseJwt(token) {
+          const base64Url = token.split('.')[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          return JSON.parse(atob(base64));
+        }
+      
+        // Retrieve the token from localStorage
+        const token = localStorage.getItem('token');
+      
+        // Fetch posts from the server
+        async function fetchPosts() {
+          try {
+            const response = await fetch("../adminCard", {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              }
+            });
+      
+            const posts = await response.json();
+      
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = ''; // Clear container
+      
+            // Loop through posts and create HTML for each post
+            posts.forEach(post => {
+              const postElement = document.createElement('div');
+              postElement.classList.add('post');
+              postElement.innerHTML = `
+                <img src="img/roitech.jpg" alt="Profile Picture" class="profile-pic">
+                <div class="post-content">
+                  <div class="post-author">${post.User.username} <span class="post-date">- ${new Date(post.createdAt).toLocaleDateString()}</span></div>
+                  <p class="post-text" style="color:navy">${post.posttitle}</p>
+                     <p class="post-text" style="color:navy">${post.price}</p>
+                        <p class="post-text" style="color:navy">${post.from}</p>
+                           <p class="post-text" style="color:navy">${post.to}</p>
+                          <!--   <p class="post-text" style="color:navy">${post.id}</p>-->
+                  <p class="post-text" data-full-text="${post.content}">
+                    ${post.content.substring(0, 100)}... <span class="read-more">Read More</span>
+                  </p>
+                  <div class="post-actions">
+                    <a class="delete" onclick="deletePost('${post.id}')"><i class="bi bi-trash"></i> Delete</a>
+                  </div>
+                </div>
+              `;
+      
+              postsContainer.appendChild(postElement);
+            });
+      
+            // Add event listener for the "Read More" functionality
+            document.querySelectorAll('.read-more').forEach(btn => {
+              btn.addEventListener('click', function() {
+                const postText = this.previousSibling.textContent.trim();
+                const fullText = this.parentElement.getAttribute('data-full-text');
+                if (postText.length < fullText.length) {
+                  this.previousSibling.textContent = fullText;
+                  this.textContent = 'Read Less';
+                } else {
+                  this.previousSibling.textContent = fullText.substring(0, 100) + '... ';
+                  this.textContent = 'Read More';
+                }
+              });
+            });
+      
+          } catch (error) {
+            console.error('Error fetching posts:', error);
+          }
+        }
+      
+        window.onload = fetchPosts;  // Fetch posts on page load
+      
+        // Post Deletion functionality
+        async function deletePost(postId) {
+          try {
+            const userData = parseJwt(token);
+            const userId = userData.id;
+      
+            const response = await fetch('../posts', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ postId, userId }),
+            });
+      
+            if (response.ok) {
+              fetchPosts(); // Reload posts after deletion
+            } else {
+              console.error('Error deleting post:', response.statusText);
+            }
+          } catch (error) {
+            console.error('Error deleting post:', error);
+          }
+        }
+      
+let  response;   
+    // Handle post submission
+        if (token) {
+          const userData = parseJwt(token);
+          const userId = userData.id;
+          const  username=userData.username; 
+          document.getElementById('post-button').addEventListener('click', async (event) => {
+            event.preventDefault();
+      
+            const posttitle = document.getElementById('post-posttitle').value;
+            const content = document.getElementById('post-content').value;
+            const posttype = document.getElementById('post-posttype').value;
+            const from = document.getElementById('post-duration-from').value;
+            const to = document.getElementById('post-duration-to').value;
+            const price= document.getElementById('price').value;
+
+          
+            try {
+
+
+ response = await fetch('../adminCard',{
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ userId, username: userData.username, content, posttitle, posttype,from,to,price})
+  });
+
+
+
+
+if(posttype=="advert"){
+  alert("hay  hello  im doing  great ")
+       response = await fetch('../posts',{
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ userId, content, posttitle, posttype, username })
+            });}
+    
+              if (response.ok) {
+                fetchPosts(); // Reload posts after submission
+              } else {
+                console.error('Error creating post:', response.statusText);
+              }
+            } catch (error) {
+              console.error('Error creating post:', error);
+            }
+          });
+        } else {
+          // Redirect to login if no token is found
+          window.location.href = 'notadmin';
+        }
+      </script>
+
+      
+</body>
+</html>

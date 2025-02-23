@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Roitech Education Solution</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js" rel="stylesheet">
+    <link href="bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="bootstrap.min.js"></script>
+    <script src="bootstrap.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #fff;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+        }
+        .sidebar h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar .nav-link {
+            color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #495057;
+        }
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+        .content {
+            margin-left: 250px;
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <h2>ROITECH EDUCATION SOLUTION ADMIN PANEL</h2>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="dashboard-link">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="user-management-link">
+                    <i class="bi bi-people"></i> User Management
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="post-management-link">
+                    <i class="bi bi-file-post"></i> Post Management
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="feedback-link">
+                    <i class="bi bi-chat-left-text"></i> Feedback
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        <!-- Dashboard Section -->
+        <div id="dashboard">
+            <h1 class="text-center">Admin Dashboard</h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Users</h5>
+                            <p class="card-text" id="total-users">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Posts</h5>
+                            <p class="card-text" id="total-posts">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Active Users</h5>
+                            <p class="card-text" id="active-users">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <canvas id="activeUsersChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Section -->
+        <div id="feedback-container" style="display: none;">
+            <h1 class="text-center">Feedback</h1>
+            <!-- Feedback messages will be displayed here -->
+        </div>
+
+        <!-- User Management Section -->
+        <div id="user-management" style="display: none;">
+            <h1 class="text-center">User Management</h1>
+            <div class="search-bar">
+                <input type="text" id="user-search" class="form-control" placeholder="Search by email...">
+            </div>
+            <table id="user-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Admin Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Users will be populated here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Post Management Section -->
+        <div id="post-management" style="display: none;">
+            <h1 class="text-center">Post Management</h1>
+            <div class="search-bar">
+                <input type="text" id="post-search" class="form-control" placeholder="Search by title or content...">
+            </div>
+            <table id="post-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Posts will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+        //    console.log(userId)
+        const token = localStorage.getItem('token');
+        function parseJwt(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            return JSON.parse(atob(base64));
+        }
+
+        const userData = parseJwt(token);
+        const isUserAdmin = userData.isAdmin;
+
+        if (isUserAdmin) {
+            window.location.href = '/homepage';
+        }
+
+        // Function to fetch and display the feedback
+        function fetchFeedback() {
+            fetch('/gfeedback', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const feedbackContainer = document.getElementById('feedback-container');
+                if (data.feedbacks && data.feedbacks.length > 0) {
+                    feedbackContainer.innerHTML = '';
+                    data.feedbacks.forEach(feedback => {
+                        const feedbackElement = document.createElement('div');
+                        feedbackElement.classList.add('feedback-item');
+                        feedbackElement.innerHTML = `
+                            <h3>${feedback.name}</h3>
+                            <p><strong>Email:</strong> ${feedback.email}</p>
+                            <p><strong>Subject:</strong> ${feedback.subject}</p>
+                            <p><strong>Message:</strong> ${feedback.message}</p>
+                            <hr>
+                        `;
+                        feedbackContainer.appendChild(feedbackElement);
+                    });
+                } else {
+                    feedbackContainer.innerHTML = '<p>No feedback available.</p>';
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching feedback:", error);
+            });
+        }
+
+        // Fetch Users
+        async function fetchUsers() {
+            try {
+                const response = await fetch('/api/users', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const users = await response.json();
+                const userTable = document.getElementById("user-table").getElementsByTagName("tbody")[0];
+                userTable.innerHTML = '';
+                users.forEach(user => {
+                    const row = userTable.insertRow();
+                    row.insertCell().textContent = user.id;
+                    row.insertCell().textContent = user.firstName;
+                    row.insertCell().textContent = user.lastName;
+                    row.insertCell().textContent = user.email;
+                    row.insertCell().textContent = user.isAdmin ? "Yes" : "No";
+                    const actionsCell = row.insertCell();
+                    actionsCell.innerHTML = `
+                        <button class="btn btn-sm ${user.isAdmin ? "btn-danger" : "btn-success"}" onclick="toggleAdminRole('${user.id}')">
+                            ${user.isAdmin ? "Remove Admin" : "Make Admin"}
+                        </button>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        }
+
+        // Fetch Posts
+        async function fetchPosts() {
+            try {
+                const response = await fetch('/api/posts', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const posts = await response.json();
+                const postTable = document.getElementById("post-table").getElementsByTagName("tbody")[0];
+                postTable.innerHTML = '';
+                posts.forEach(post => {
+                    const row = postTable.insertRow();
+                    row.insertCell().textContent = post.posttitle;
+                    row.insertCell().textContent = post.username;
+                    row.insertCell().textContent = new Date(post.createdAt).toLocaleDateString();
+                    const actionsCell = row.insertCell();
+                    actionsCell.innerHTML = `
+                        <button class="btn btn-sm btn-danger" onclick="deletePost('${post.id}')">Delete</button>
+                        <button class="btn btn-sm btn-primary" onclick="editPost('${post.id}')" disabled>Edit</button>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+            }
+        }
+
+        // Toggle Admin Role
+        async function toggleAdminRole(userId) {
+            try {
+                const response = await fetch(`/api/users/${userId}/toggle-admin`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (response.ok) {
+                    fetchUsers();
+                }
+            } catch (error) {
+                console.error('Error toggling admin role:', error);
+            }
+        }
+
+        // Delete Post
+        async function deletePost(postId) {
+            try {
+                const response = await fetch(`/api/posts/${postId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (response.ok) {
+                    fetchPosts();
+                }
+            } catch (error) {
+                console.error('Error deleting post:', error);
+            }
+        }
+
+        // Initialize Dashboard Metrics
+        async function initializeDashboard() {
+            try {
+                const usersResponse = await fetch('/api/users', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const users = await usersResponse.json();
+
+                const postsResponse = await fetch('/api/posts', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const posts = await postsResponse.json();
+
+                document.getElementById("total-users").textContent = users.length;
+                document.getElementById("total-posts").textContent = posts.length;
+                document.getElementById("active-users").textContent = users.filter(user => user.isActive).length;
+            } catch (error) {
+                console.error('Error initializing dashboard:', error);
+            }
+        }
+
+        // Initialize Chart
+        const ctx = document.getElementById('activeUsersChart').getContext('2d');
+        const activeUsersChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                datasets: [{
+                    label: 'Active Users',
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Navigation
+        document.getElementById("dashboard-link").addEventListener("click", () => {
+            document.getElementById("dashboard").style.display = "block";
+            document.getElementById("user-management").style.display = "none";
+            document.getElementById("feedback-container").style.display = "none";
+            document.getElementById("post-management").style.display = "none";
+            initializeDashboard();
+        });
+
+        document.getElementById("feedback-link").addEventListener("click", () => {
+            document.getElementById("dashboard").style.display = "none";
+            document.getElementById("user-management").style.display = "none";
+            document.getElementById("post-management").style.display = "none";
+            document.getElementById("feedback-container").style.display = "block";
+            fetchFeedback();
+        });
+
+        document.getElementById("user-management-link").addEventListener("click", () => {
+            document.getElementById("dashboard").style.display = "none";
+            document.getElementById("user-management").style.display = "block";
+            document.getElementById("feedback-container").style.display = "none";
+            document.getElementById("post-management").style.display = "none";
+            fetchUsers();
+        });
+
+        document.getElementById("post-management-link").addEventListener("click", () => {
+            document.getElementById("dashboard").style.display = "none";
+            document.getElementById("user-management").style.display = "none";
+            document.getElementById("post-management").style.display = "block";
+            document.getElementById("feedback-container").style.display = "none";
+            fetchPosts();
+        });
+
+        // Initial Load
+        initializeDashboard();
+    </script>
+</body>
+</html>

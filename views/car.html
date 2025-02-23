@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat App</title>
+<style>
+        body {
+            background: linear-gradient(to bottom, #2c3e50, #4ca1af); /* Intuitive background gradient (modern look) */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean, modern font */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+        }
+
+        .chat-container {
+            width: 400px;
+            max-width: 100%;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5); /* Slightly darker background to make bubbles stand out */
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        /* Sender Bubble */
+        .sender .speech-bubble {
+            background: linear-gradient(145deg, #ff6f61, #ff8a5c); /* Shiny gradient for sender */
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 20px;
+            max-width: 70%;
+            position: relative;
+            animation: shine 3s infinite; /* Longer animation for shiny effect */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+            word-wrap: break-word;
+            white-space: normal;
+            line-height: 1.6; /* Improved line spacing */
+            font-weight: 500; /* Slightly bolder text for clarity */
+            letter-spacing: 0.5px; /* Slight spacing for better readability */
+        }
+
+        /* Receiver Bubble */
+        .receiver .speech-bubble {
+            background: linear-gradient(145deg, #3498db, #8e44ad); /* Shiny gradient for receiver */
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 20px;
+            max-width: 70%;
+            position: relative;
+            animation: shine 3s infinite; /* Shiny effect for receiver */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+            word-wrap: break-word;
+            white-space: normal;
+            line-height: 1.6; /* Improved line spacing */
+            font-weight: 500; /* Slightly bolder text for clarity */
+            letter-spacing: 0.5px; /* Slight spacing for better readability */
+        }
+
+        /* Tails for Sender and Receiver */
+        .sender .speech-bubble:before,
+        .receiver .speech-bubble:before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            width: 0;
+            height: 0;
+        }
+
+        /* Tail for Sender */
+        .sender .speech-bubble:before {
+            left: 20px;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #ff8a5c; /* Tail color for sender */
+        }
+
+        /* Tail for Receiver */
+        .receiver .speech-bubble:before {
+            right: 20px;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #8e44ad; /* Tail color for receiver */
+        }
+
+        @keyframes shine {
+            0% {
+                background: linear-gradient(145deg, #ff6f61, #ff8a5c);
+            }
+            50% {
+                background: linear-gradient(145deg, #ff8a5c, #ff6f61);
+            }
+            100% {
+                background: linear-gradient(145deg, #ff6f61, #ff8a5c);
+            }
+        }
+
+        .person-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: inline-block;
+        }
+</style>
+</head>
+<body>
+<div class="chat-container">
+<div class="message sender">
+<div class="person-icon"></div>
+<div class="speech-bubble">Hello, how are you?</div>
+</div>
+<div class="message receiver">
+<div class="person-icon"></div>
+<div class="speech-bubble">I'm good, thanks for asking!</div>
+</div>
+<div class="message sender">
+<div class="person-icon"></div>
+<div class="speech-bubble">What are you up to today?</div>
+</div>
+<div class="message receiver">
+<div class="person-icon"></div>
+<div class="speech-bubble">Just working on a project, how about you?</div>
+</div>
+</div>
+</body>
+</html>

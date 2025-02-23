@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FAQ - RoitechEducation</title>
+    <style>
+        /* Basic reset and styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #34495e;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #brand-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        #nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #nav-links a:hover {
+            background-color: #357ABD;
+            border-radius: 5px;
+        }
+
+        /* FAQ Section Styling */
+        main {
+            padding: 40px 20px;
+        }
+
+
+
+        p{border:1px solid navy;
+        
+        }
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .faq-container h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            font-family: 'Cursive', sans-serif; /* Apply cursive font to the heading */
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+        }
+
+        .faq-item button {
+            width: 100%;
+            text-align: left;
+            padding: 15px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            color: #333;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-item button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .faq-answer {
+            padding: 15px;
+            background-color: #f9f9f9;
+            display: none;
+            border-left: 3px solid #34495e;
+            margin-top: 10px;
+            border: 1px solid #1069C2FF; /* Add border around the answer */
+            border-radius: 5px; /* Rounded corners */
+            transition: all 0.3s ease;
+            font-family:cursive; /* Apply cursive font to the answer text */
+        }
+
+        .faq-item:hover .faq-answer {
+            display: block;
+            
+        }
+
+        .language-toggle {
+            text-align: right;
+            margin: 20px 0;
+        }
+
+        .language-toggle button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #34495e;
+            color: #fff;
+            font-size: 1rem;
+            font-weight:bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .language-toggle button:hover {
+            background-color: #357ABD;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .faq-answer {
+            padding: 15px;
+            background-color: #f9f9f9;
+            display: none;
+            border-left: 3px solid #34495e;
+            margin-top: 10px;
+            border: 1px solid #ddd; /* Adds border around the answer */
+            border-radius: 5%;; /* Keeps rounded corners */
+            transition: all 0.3s ease;
+            font-family: 'Cursive', sans-serif; /* Apply cursive font to the answer text */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow for visual depth */
+        }
+        
+        .faq-item:hover .faq-answer {
+            display: block;
+        }
+        
+        #faq-title{
+
+            font-weight:bold;
+            
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <div id="brand-header">RoitechEducation</div>
+        <div id="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/">Courses</a>
+            <a href="/contact">Contact</a>
+            <a href="/terms-privacy">Terms</a>
+            <a href="/policy">Privacy</a>
+            <a href="/faq">FAQ</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="language-toggle">
+        <button onclick="toggleLanguage()">Switch to Swahili</button>
+    </div>
+
+    <section class="faq-container">
+        <h1 id="faq-title">Frequently Asked Questions  [FAQ]</h1>
+
+        <div class="faq-item" id="faq-item1">
+            <button class="faq-btn">What is RoitechEducation?</button>
+            <div class="faq-answer">
+                <p id="faq-answer1">RoitechEducation is an online platform that allows users to create, advertise, and take courses on various topics. It provides a space for instructors to share their knowledge with a global audience.</p>
+                <p id="faq-answer1-swahili" style="">RoitechEducation ni jukwaa la mtandaoni ambalo linawawezesha watumiaji kuunda, kutangaza, na kuchukua kozi katika mada mbalimbali. Inatoa nafasi bure kwa wahadhiri kushiriki maarifa yao na hadhira ya kimataifa.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" id="faq-item2">
+            <button class="faq-btn">How can I become an instructor?</button>
+            <div class="faq-answer">
+                <p id="faq-answer2">To become an instructor, simply sign up for an account on RoitechEducation solution,contact  us  then we will have you procedures to create your course, and submit it for review. Once approved, your course will be listed on our platform.</p>
+                <p id="faq-answer2-swahili" style="">Ili kuwa mhadhiri, jiandikishe kwenye akaunti ya RoitechEducation solution, unda kozi yako, na uwasilishe kwa mapitio. Mara baada ya kupitishwa, kozi yako itachapishwa kwenye jukwaa letu.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" id="faq-item3">
+            <button class="faq-btn" >Do I have to pay to use the platform?</button>
+            <div class="faq-answer">
+                <p id="faq-answer3" >RoitechEducation solution  offers a payed platform for both instructors and students. Instructors can create and advertise their courses by paying  fe  amount of  money, and students can take courses for free unless specified otherwise by the instructor.</p>
+                <p id="faq-answer3-swahili" style="">RoitechEducation  solution  inatoa jukwaa la bure kwa wahadhiri na wanafunzi. Wahadhiri wanaweza kuunda na kutangaza kozi zao kwa gharama ya chini  kabisa, na wanafunzi wanaweza kujiunga na kozi bure isipokuwa pale ambapo mhadhiri atakapoeleza vinginevyo.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" id="faq-item4">
+            <button class="faq-btn">Can I cancel my course enrollment?</button>
+            <div class="faq-answer">
+                <p id="faq-answer4">Yes, you can cancel your course enrollment at any time provided  that you didnt take any class for that course. If the course has a payment associated with it, please refer to our refund policy for more information.</p>
+                <p id="faq-answer4-swahili" style="">Ndio, unaweza kughairi usajili wa kozi yako wakati wowote. Ikiwa kozi ina malipo, tafadhali rejelea sera yetu ya kurejesha pesa kwa maelezo zaidi.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" id="faq-item5">
+            <button class="faq-btn">How can I contact support?</button>
+            <div class="faq-answer">
+                <p id="faq-answer5">If you need assistance, please contact our support team via email at support@roitech.edu. We aim to respond to all inquiries within 24 hours.</p>
+                <p id="faq-answer5-swahili" style="">Ikiwa unahitaji msaada, tafadhali wasiliana na timu yetu ya msaada kwa barua pepe (email) kupitia support@roitech.edu. Tunalenga kujibu maswali yote ndani ya masaa 24.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 RoitechEducation. All rights reserved.</p>
+</footer>
+
+<script>
+    // Function to toggle between English and Swahili
+    function toggleLanguage() {
+        const languageButton = document.querySelector('.language-toggle button');
+        const allAnswersEnglish = document.querySelectorAll('[id$="-answer"]');
+        const allAnswersSwahili = document.querySelectorAll('[id$="-answer-swahili"]');
+        //put all answers  in arry of answers  then appy  them
+
+
+        if (languageButton.innerText === "Switch to Swahili") {
+            languageButton.innerText = "Switch to English";
+            allAnswersEnglish.forEach(answer =>{
+                
+                
+                answer.style.display = 'none'});
+            allAnswersSwahili.forEach(answer => answer.style.display = 'block');
+            document.getElementById('faq-title').innerText = 'Maswali Yanayoulizwa Mara kwa Mara';
+        } else {
+            languageButton.innerText = "Switch to Swahili";
+            allAnswersEnglish.forEach(answer => answer.style.display = 'block');
+            allAnswersSwahili.forEach(answer => answer.style.display = 'none');
+            document.getElementById('faq-title').innerText = 'Frequently Asked Questions';
+        }
+    }
+</script>
+
+</body>
+</html>
