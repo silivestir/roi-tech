@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "roitech-education-solution",
+    "private_key_id": "f863920144a1abe9a151379cd28a411de5503ae0",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDF+5rzj1lSU3K8\ne51KDbPfGsk7Khsp4tcU60L78KX9Vj2ObMqcZnWGKRC+kRzWe3dI8MJB2Q4+kk7+\nlgOeUTPblEKl3YVWmTI2VTOueI+WqmktoC1BYtRn9c7dkb8HkMc6YOQ6kgt5VPZy\n03oFn49eIUSl0NWElaNH8DJJcNAkXS6uDcCXrCyMF08RveVcvQF/Qfp7qY06wr/o\nfT2aHlVk+JvzfN0SGTF5uvcEtbMNYg8dFBSrgqHxjkxSRHPyiysAGl0PGy+ZVCTS\nIKtgsmTL9P1MtK0/HMh9qW619z1uU9c3PfH0H6SvnFaTOl8gh5GC+hc1/cx3jFkC\nzqXo7mZ3AgMBAAECggEAGxOdDoBlY+f7wiFZ0p3rIrEkIk5Q5rqaVccTIye3W91m\nj8r7Lsaofg+xtY5dFkxOdRBQUPchhpc17IWRux457GbrconISZ6sClg+uDbO1Hk7\n5zyH0/BzQkCQ6SacrKk1RhuoOwZsQUzIY83eW1SGJAaCv/a+rOJWMWl9RyQBo2dJ\nKLzgYGNw8H6y12Cux85pU7YyX2Y9DkysanqP5o76iP4eLP1OcYmR+9n3uA1qhnoJ\nx2FnE5X9IAk89F5ycty5ViNceeCrrQujPGR+i0LQqcarpwgAz82KEw6DcUJEDTks\nzuJT56w7JertPXMTKjk3uNXfF/EJtQTtCEQIiYhOYQKBgQD5vlZe9VwFXv691G70\nKPcoQ8wsCXwOrP1FbbavwD8wnZE/7/c1ixRHpeHfneJ1zkyZtx6Qr4bNvuza0Eaj\n+MULoIkkiCfNb889z5FunaV/Txws2hJg+bKgKKpcC07/Fdt7bhsloOkhgpIZjpSy\nLOumlfHth/oEWp+aZxTga3O3pwKBgQDK8VCVfqxQFB1bK3E2QDhoCb9hH2qh3pSl\nUWssgj9PDSIXk5MJnQLtf/3kMI3CoiYaVMJ2Y6IClN+CMvpVQ9vESyAnyHeqi8qk\ndcHZzVKITU95/+HaQforg5BhpY2O0abT6krZEEnh6VFTB1Kvkh3Rj7tcqwMT4s/W\npuQ4Uj20sQKBgQCuI4LUCZ+VeyyDLtoC04GrCMMXvbFMBmE/hQXKPHGTM3sxKuCj\n7AtC/i6mHs/mNugAksf0OP/0/HjpBisLcI3s0o5t86ZVP+4wekg86h2YzI+n0pLY\nHaPouxI2xgfaI+J7iUXSkgWcwQ+gVGPobRwPdyRO7O5vFMWPAutypFn2pwKBgAPm\nDOFCVLcZG9NDi2I6a5r8DPQlsVu4texTGxb4zZSMMQp46Es3+/VqDwuSLzb8/HRn\nCnFRyqv4Bi8vIYX/zrn/o3eAL2RUWSk9peK0QhCiQ5OZadJSkCbD2UM29fg3aNgL\nWTLAUFsJq2lH67u5t97tvvCxzFZWdh2uiRXX5p2RAoGBAOhVq7y/PTAaDmjEdLf1\ncnnE/4z054bA9fuiOW2pTvvFbbNyX0eLCz6ejMG26+G4H907GPQGv9DmpQxdqOdi\nhEysOWVK17jSrV8MgzXQ4YBP2APf/DpQ9MxLQvN0omIpDhf+wVnoY09Mowt4jHrU\np2GRTsOiEyv9xhuMXXEXq1tu\n-----END PRIVATE KEY-----\n",
+    "client_email": "google-splannes-key@roitech-education-solution.iam.gserviceaccount.com",
+    "client_id": "112358060146956234582",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-splannes-key%40roitech-education-solution.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+}
