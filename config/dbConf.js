@@ -4,7 +4,7 @@ require("dotenv").config(); // Ensure the environment variables are loaded
 
 // Initialize sequelize with environment variables
 const sequelize = new Sequelize(config.username, config.database, config.password, {
-    host: "127.0.0.1",
+    host: config.host,
     port: config.port,
     dialect: 'postgres',
     logging: false, // Disabling Sequelize logging
