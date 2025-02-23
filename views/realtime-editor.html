@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roitech Education Solution</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/theme/dracula.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        .navbar {
+            background-color: #1c2833;
+        }
+        .white-text, .nav-link, .bi, .navbar {
+            color: rgb(219, 223, 226);
+            font-weight: bold;
+            font-family: Helvetica, sans-serif;
+        }
+        #editor-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 56px); /* Full height minus navbar height */
+        }
+        #editor {
+            flex: 1;
+            width: 100%;
+        }
+        #toolbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #1c2833;
+        }
+        #toolbar button {
+            margin: 0 5px;
+        }
+        #output {
+            background-color: #1c2833;
+            color: white;
+            padding: 10px;
+            height: 150px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand me-2" href="/homepage">
+                <i class="bi bi-journal-bookmark"></i> <span class="white-text">Roitech Education</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarButtonsExample" aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarButtonsExample">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">
+                            <i class="bi bi-person"></i> <span class="white-text">Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/advert">
+                            <i class="bi bi-chat-dots"></i> <span class="white-text">Advertisements</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pdfy">
+                            <span class="white-text">Real Time PDF</span>
+                            <i class="bi blink-cursor"></i>
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <span id="user-name" class="me-3"></span>
+                    <button id="logout" type="button" class="btn btn-danger">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="editor-container">
+        <div id="toolbar">
+            <button id="newFileBtn" class="btn btn-primary">New File</button>
+            <button id="saveFileBtn" class="btn btn-success">Save File</button>
+            <button id="runBtn" class="btn btn-warning">Run Code</button>
+            <button id="startBtn" class="btn btn-info">Speak</button>
+            <button id="stopBtn" class="btn btn-danger" disabled>Mute</button>
+        </div>
+        <textarea id="editor"></textarea>
+        <pre id="output"></pre>
+    </div>
+
+    <audio id="audio" autoplay></audio>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/mode/javascript/javascript.min.js"></script>
+    <script>
+        const socket = io();
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const audio = document.getElementById('audio');
+        const editorElement = document.getElementById('editor');
+        const outputElement = document.getElementById('output');
+        const runBtn = document.getElementById('runBtn');
+        const newFileBtn = document.getElementById('newFileBtn');
+        const saveFileBtn = document.getElementById('saveFileBtn');
+
+        let localStream;
+        let peerConnection;
+        let user = 'user1'; // For demonstration purposes
+        let isUserTyping = false; // To avoid overwriting changes from others
+
+        const iceServers = {
+            iceServers: [
+                {
+                    urls: [
+                        'stun:stun.l.google.com:19302',
+                        'stun:stun1.l.google.com:19302',
+                        'turn:jb-turn1.xirsys.com:80?transport=udp',
+                        'turn:jb-turn1.xirsys.com:3478?transport=udp',
+                        'turn:jb-turn1.xirsys.com:80?transport=tcp',
+                        'turn:jb-turn1.xirsys.com:3478?transport=tcp',
+                        'turns:jb-turn1.xirsys.com:443?transport=tcp',
+                        'turns:jb-turn1.xirsys.com:5349?transport=tcp'
+                    ],
+                    username: 'a8CV2-OTV6RKRWp2BOoFWJlCM5YansYrKlKBYQOGUWX4SQR8qmKxSqJeLKfqbSiGAAAAAGeSFP5zcGxhbm5lcw==',
+                    credential: 'ec2eb5ac-d971-11ef-9221-0242ac120004'
+                }
+            ]
+        };
+
+        const editor = CodeMirror.fromTextArea(editorElement, {
+            lineNumbers: true,
+            mode: "javascript",
+            theme: "dracula",
+            value: 'console.log("Hello, world!");',
+        });
+
+        startBtn.addEventListener('click', () => {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    localStream = stream;
+                    audio.srcObject = stream;
+                    startBtn.disabled = true;
+                    stopBtn.disabled = false;
+
+                    peerConnection = new RTCPeerConnection(iceServers);
+                    peerConnection.addStream(localStream);
+
+                    socket.emit('start', { message: 'Start chat' });
+                })
+                .catch(err => console.error('Error accessing media devices.', err));
+        });
+
+        stopBtn.addEventListener('click', () => {
+            localStream.getTracks().forEach(track => track.stop());
+            peerConnection.close();
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            socket.emit('stop', { message: 'Stop chat' });
+        });
+
+        editor.on('keyup', () => {
+            if (!isUserTyping) {
+                const code = editor.getValue();
+                socket.emit('document-update', { code });
+            }
+        });
+
+        socket.on('document-update', (msg) => {
+            if (msg.code !== editor.getValue()) {
+                isUserTyping = true;
+                editor.setValue(msg.code);
+                isUserTyping = false;
+            }
+        });
+
+        runBtn.addEventListener('click', () => {
+            const code = editor.getValue();
+            console.log('Running Code:', code);
+            socket.emit('run-code', code);
+        });
+
+        socket.on('code-output', (output) => {
+            console.log('Code Output:', output);
+            outputElement.textContent = output;
+        });
+
+        newFileBtn.addEventListener('click', () => {
+            editor.setValue('');
+            outputElement.textContent = '';
+        });
+
+        saveFileBtn.addEventListener('click', () => {
+            const code = editor.getValue();
+            const blob = new Blob([code], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const filen = prompt("Choose a file name with extension (e.g., .js, .txt, .py):");
+            if (filen === "") filen = "code.js";
+            a.download = filen;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/login';
+        }
+
+        document.getElementById('logout').addEventListener('click', () => {
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+        });
+    </script>
+</body>
+</html>

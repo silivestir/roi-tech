@@ -1,0 +1,7 @@
+ident:splannes
+secret:127a156e-d7e0-11ef-8517-0242ac130002
+api path:https://global.xirsys.net
+chanel:roitech
+
+
+// all above are xirsys.net api credentials

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoiTech Education Solution</title>
+  <!---  <link rel="stylesheet" href="styles.css">-->
+  <style>
+
+    /* Basic reset and styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    background-color: #ffffff; /* Clean white background */
+    font-family: Arial, sans-serif;
+    color: #333333; /* Default text color */
+    line-height: 1.6;
+}
+
+/* Header Styling */
+header {
+    background-color: #34495e; /* Soft blue background */
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#brand-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+#nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+#nav-links a:hover {
+    background-color: #357ABD;
+    border-radius: 5px;
+}
+
+/* Main Content Section */
+main {
+    padding: 40px 20px;
+}
+
+.courses-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.course-card {
+    background-color: #ffffff;
+    border: 1px solid #f1f1f1;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.course-card h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.course-card p {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.course-card .price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.course-card ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    text-align: left;
+    font-size: 1rem;
+    color: #555;
+}
+
+.cta-btn {
+    background-color: #333333; /* Green button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+    background-color: #45A049;
+}
+
+/* Footer */
+footer {
+    background-color: #f1f1f1;
+    padding: 20px;
+    text-align: center;
+    color: #333;
+    margin-top: 40px;
+}
+
+footer p {
+    font-size: 1rem;
+    color: #555;
+}
+
+  </style>
+  <style>
+    body {
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .report{ display: none}
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .create-post-container {
+        position: sticky;
+        top: 70px; /* Adjust based on navbar height */
+        z-index: 1000;
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .posts-container {
+        /*overflow-y: auto;*/
+        flex-grow: 1;
+    }
+
+    .post {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+    }
+
+    .profile-pic {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+        object-fit: cover;
+    }
+
+    .post-content {
+        flex-grow: 1;
+    }
+
+    .post-author {
+        font-weight: bold;
+    }
+
+    .post-date, .time-elapsed {
+        color: #6c757d;
+        font-size: 0.9em;
+    }
+
+    .create-post-content textarea{
+        width: 100%;
+        height: 80px;
+        padding: 10px;
+        border: none;
+        resize: none;
+        font-size: 1.1rem;
+        outline: none;
+    }
+
+    .create-post-content textarea:focus {
+        box-shadow: none;
+    }
+
+    .create-post-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 10px;
+        border-top: 1px solid #e6e6e6;
+    }
+
+    .create-post-actions button {
+        padding: 6px 12px;
+    }
+
+    .create-post-options {
+        display: flex;
+        align-items: center;
+    }
+
+    .create-post-options button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #1DA1F2;
+        margin-right: 10px;
+        font-size: 1.2rem;
+    }
+
+    .create-post-options button:hover {
+        color: #007bff;
+    }
+
+
+    .read-more {
+        cursor: pointer;
+        color: #007bff;
+        text-decoration: underline;
+    }
+    .like,.comment,.report {
+      text-decoration: none;
+    }
+
+    .container-fluid {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    #posts-container {
+        padding: 10px 0;
+        height: calc(100vh - 240px); /* Adjust this value based on navbar and create post height */
+        /*overflow-y: scroll;*/
+    }
+</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div id="brand-header">RoiTech Education Solution</div>
+            <div id="nav-links">
+                <a href="/login"><i class="fas fa-key"></i> Login</a>
+                <a href="/register"><i class="fas fa-lock"></i> Sign Up</a>
+                <a href="/about"><i class=""></i> About Us</a>
+                <a href="/contact"><i class=""></i> Contact Us</a>
+                <a href="/faq"><i class=""></i> faq</a>
+                <a href="/terms"><i class=""></i> Terms,Policy and  Procedures</a>
+                <a href="/Policy"><i class=""></i> </a>
+                
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Course Cards Section -->
+        <div class="courses-container" id="main">
+<!--<div class="course-card">
+                <h2>Java Course</h2>
+                <p>Learn the basics of Java and become a proficient developer.</p>
+                <p class="price">Price: $18 (TZS 41,400)</p>
+                <ul>
+                    <li>Understand Java syntax and structure.</li>
+                    <li>Master object-oriented programming principles.</li>
+                   
+                    <li>Prepare for Java certification exams.</li>
+                </ul>
+                <button class="cta-btn" href="index1.html">Login to Enroll Now</button>
+            </div>
+
+            <div class="course-card">
+                <h2>JavaScript Course</h2>
+                <p>Master JavaScript, the programming language of the web.</p>
+                <p class="price">Price: $20 (TZS 46,000)</p>
+                <ul>
+                    <li>Manipulate the DOM for dynamic web pages.</li>
+                    <li>Create interactive web applications.</li>
+                    <li>Utilize JavaScript libraries and frameworks.</li>
+                </ul>
+                <button class="cta-btn" href="index1.html">Login to Enroll Now</button>
+            </div>
+
+            <div class="course-card">
+                <h2>Node.js Course</h2>
+                <p>Dive into server-side programming with Node.js.</p>
+                <p class="price">Price: $25 (TZS 57,500)</p>
+                <ul>
+                    <li>Build scalable web applications with Express.</li>
+                    <li>Learn RESTful API development.</li>
+                    <li>Deploy applications to the cloud.</li>
+                </ul>
+                <button class="cta-btn" href="index1.html">Login to Enroll Now</button>
+            </div>
+
+            <div class="course-card">
+                <h2>Postgres  Course</h2>
+                <p>Become an expert in database management with Postgres.</p>
+                <p class="price">Price: $22 (TZS 50,600)</p>
+                <ul>
+                    <li>Master SQL queries for data manipulation.</li>
+                    <li>Create and manage databases and tables.</li>
+               
+                </ul>
+                <button class="cta-btn" href="index1.html">Login to Enroll Now</button>
+            </div>-->
+        </div>
+    </main>
+
+    <footer>
+        <p>&#169; 2024 RoiTech Education Solution</p>
+    </footer>
+<script>
+let  main = document.querySelector("#main")
+   // Function to decode JWT token
+   function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(base64));
+  }
+
+  // Retrieve the token from localStorage
+  const token = localStorage.getItem('authToken');
+  
+  // Fetch posts from the server
+  async function fetchPosts() {
+    try {
+      const response = await fetch("../adminCard", {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const posts = await response.json();
+
+      const postsContainer = document.getElementById('main');
+      postsContainer.innerHTML = ''; // Clear container
+
+      // Loop through posts and create HTML for each post
+      posts.forEach(post => {
+        const postElement = document.createElement('div');
+        postElement.classList.add('post');
+        postElement.innerHTML = `
+          <img src="img/roitech.jpg" alt="Profile Picture" class="profile-pic">
+          <div class="post-content">
+            <div class="post-author"><span style="color:grey;font-family:Helvetica;opacity:0.4;" > by </span>  ${post.User.username} <span class="post-date">- ${new Date(post.createdAt).toLocaleDateString()}</span></div>
+            <p class="post-text" style="color:navy;font-weight:bold;font-family:cursive;">${post.posttitle} <p style="color:grey;font-family:cursive;">to be started from (${post.from} to  ${post.to} )</p> </p>
+               <p class="post-text" style="color:grey; font-weight:bold;">the  price  for this  course is : ${post.price}.00Tsh</p>
+                     <!--    <p class="post-text" style="color:navy">${post.from}</p>
+                     <p class="post-text" style="color:navy">${post.to}</p>
+                <p class="post-text" style="color:navy">${post.id}</p>-->
+            <p class="post-text" data-full-text="${post.content}">
+              ${post.content.substring(0, 100)}... <span class="read-more">Learn More</span>
+            </p>
+            <div class="post-actions">
+              <button class="cta-btn">Login to Enroll Now</button>
+             <!-- <a class="delete" onclick="deletePost('${post.id}')"><i class="bi bi-trash"></i> Delete</a>-->
+            </div>
+          </div>
+        `;
+
+        postsContainer.appendChild(postElement);
+      });
+
+      // Add event listener for the "Read More" functionality
+      document.querySelectorAll('.read-more').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const postText = this.previousSibling.textContent.trim();
+          const fullText = this.parentElement.getAttribute('data-full-text');
+          if (postText.length < fullText.length) {
+            this.previousSibling.textContent = fullText;
+            this.textContent = 'Read Less';
+          } else {
+            this.previousSibling.textContent = fullText.substring(0, 100) + '... ';
+            this.textContent = 'Read More';
+          }
+        });
+      });
+
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  }
+
+  window.onload = fetchPosts;  // Fetch posts on page load
+document.querySelectorAll('.cta-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    //alert("------------------------")
+    window.open('index1.html')
+})
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screen Share App</title>
+  <style>
+    video {
+      width: 100%;
+      max-width: 600px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Screen Sharing App</h2>
+  
+  <!-- Single video element for the shared screen -->
+  <video id="screen-share-video" autoplay muted></video>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    let localStream;  // To store the screen stream
+    let peerConnection;  // For peer-to-peer connection
+    let socket = io();  // Using Socket.IO for signaling (you'll need a server for this)
+    
+    // Get the video element for displaying the shared screen
+    const localVideo = document.getElementById("screen-share-video");
+
+    // Function to determine if the user is the teacher or a student
+    function getUserRole() {
+      // You can set the user role based on some login system, or a prompt, etc.
+      // For now, let's assume the teacher manually sets the role.
+      return prompt("Are you the teacher? (yes/no)").toLowerCase() === 'yes' ? 'teacher' : 'student';
+    }
+
+    // Role assignment
+    const userRole = getUserRole();  // 'teacher' or 'student'
+    
+    // Custom ICE server configuration
+    const iceServers = [
+      { urls: "stun:stun.relay.metered.ca:80" },
+      {
+        urls: "turn:global.relay.metered.ca:80",
+        username: "97977624f9c3e1895ef2bc58",
+        credential: "kHJDpfCqiwIb7INQ",
+      },
+      {
+        urls: "turn:global.relay.metered.ca:80?transport=tcp",
+        username: "97977624f9c3e1895ef2bc58",
+        credential: "kHJDpfCqiwIb7INQ",
+      },
+      {
+        urls: "turn:global.relay.metered.ca:443",
+        username: "97977624f9c3e1895ef2bc58",
+        credential: "kHJDpfCqiwIb7INQ",
+      },
+      {
+        urls: "turns:global.relay.metered.ca:443?transport=tcp",
+        username: "97977624f9c3e1895ef2bc58",
+        credential: "kHJDpfCqiwIb7INQ",
+      },
+    ];
+
+    // Function to start screen sharing (for teacher only)
+    async function startScreenShare() {
+      try {
+        // Get the screen media (only for the teacher)
+        localStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+    
+        // Set the local video to display the screen being shared
+        localVideo.srcObject = localStream;
+    
+        // Broadcast the screen to other users using WebRTC
+        initiateWebRTCConnection();
+        
+        // Notify the server that the user is the teacher and is sharing their screen
+        socket.emit("start-sharing", { isTeacher: true });
+      } catch (err) {
+        console.error("Error accessing display media:", err);
+      }
+    }
+
+    // Function to initiate WebRTC connection and broadcast screen
+    function initiateWebRTCConnection() {
+      // Create a new RTCPeerConnection with the custom ICE servers
+      peerConnection = new RTCPeerConnection({
+        iceServers: iceServers,
+      });
+    
+      // Add local screen stream to the peer connection
+      localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+    
+      // Handle ICE candidate gathering
+      peerConnection.onicecandidate = (event) => {
+        if (event.candidate) {
+          socket.emit("new-ice-candidate", event.candidate);
+        }
+      };
+    
+      // When a remote stream is received, set it as the source for the single video element
+      peerConnection.ontrack = (event) => {
+        localVideo.srcObject = event.streams[0];
+      };
+    
+      // Create an offer to start the connection with remote users
+      peerConnection.createOffer().then(offer => {
+        return peerConnection.setLocalDescription(offer);
+      }).then(() => {
+        // Send the offer to the signaling server (using Socket.IO)
+        socket.emit("offer", peerConnection.localDescription);
+      }).catch(err => console.error("Error creating offer:", err));
+    }
+
+    // Listen for an incoming offer from other users
+    socket.on("offer", async (offer) => {
+      // Set the remote description for the peer connection
+      await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+    
+      // Create an answer
+      const answer = await peerConnection.createAnswer();
+      await peerConnection.setLocalDescription(answer);
+    
+      // Send the answer back to the offerer
+      socket.emit("answer", peerConnection.localDescription);
+    });
+
+    // Listen for incoming ICE candidates
+    socket.on("new-ice-candidate", (candidate) => {
+      peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+    });
+
+    // Listen for incoming answers from other users
+    socket.on("answer", (answer) => {
+      peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+    });
+
+    // If the user is a teacher, start screen sharing
+    if (userRole === 'teacher') {
+      startScreenShare();
+    }
+
+    // If the user is a student, automatically start viewing the teacher's stream
+    if (userRole === 'student') {
+      socket.emit("join-as-student", {});  // Notify the server that this user is a student
+    }
+  </script>
+</body>
+</html>

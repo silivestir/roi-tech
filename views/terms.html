@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tales - Terms and Conditions</title>
+    <style>
+
+        /* Basic reset and styling */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    /* Body styling */
+    body {
+        background-color: #ffffff; /* Clean white background */
+        font-family: Arial, sans-serif;
+        color: #333333; /* Default text color */
+        line-height: 1.6;
+    }
+    
+    /* Header Styling */
+    header {
+        background-color: #34495e; /* Soft blue background */
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    
+    header nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    #brand-header {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    
+    #nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+    
+    #nav-links a:hover {
+        background-color: #357ABD;
+        border-radius: 5px;
+    }
+    
+    /* Main Content Section */
+    main {
+        padding: 40px 20px;
+    }
+    
+    .courses-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        justify-items: center;
+    }
+    
+    .course-card {
+        background-color: #ffffff;
+        border: 1px solid #f1f1f1;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 100%;
+        max-width: 350px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .course-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    .course-card h2 {
+        font-size: 1.8rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    
+    .course-card p {
+        font-size: 1rem;
+        color: #777;
+        margin-bottom: 20px;
+    }
+    
+    .course-card .price {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    
+    .course-card ul {
+        list-style-type: disc;
+        margin-left: 20px;
+        text-align: left;
+        font-size: 1rem;
+        color: #555;
+    }
+    
+    .cta-btn {
+        background-color: #333333; /* Green button */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .cta-btn:hover {
+        background-color: #45A049;
+    }
+    
+    /* Footer */
+    footer {
+        background-color: #f1f1f1;
+        padding: 20px;
+        text-align: center;
+        color: #333;
+        margin-top: 40px;
+    }
+    
+    footer p {
+        font-size: 1rem;
+        color: #555;
+    }
+    
+      </style>
+      <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .report{ display: none}
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        .create-post-container {
+            position: sticky;
+            top: 70px; /* Adjust based on navbar height */
+            z-index: 1000;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        .posts-container {
+            /*overflow-y: auto;*/
+            flex-grow: 1;
+        }
+    
+        .post {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+    
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+    
+        .post-content {
+            flex-grow: 1;
+        }
+    
+        .post-author {
+            font-weight: bold;
+        }
+    
+        .post-date, .time-elapsed {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    
+        .create-post-content textarea{
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border: none;
+            resize: none;
+            font-size: 1.1rem;
+            outline: none;
+        }
+    
+        .create-post-content textarea:focus {
+            box-shadow: none;
+        }
+    
+        .create-post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid #e6e6e6;
+        }
+    
+        .create-post-actions button {
+            padding: 6px 12px;
+        }
+    
+        .create-post-options {
+            display: flex;
+            align-items: center;
+        }
+    
+        .create-post-options button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #1DA1F2;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+    
+        .create-post-options button:hover {
+            color: #007bff;
+        }
+    
+    
+        .read-more {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+        }
+        .like,.comment,.report {
+          text-decoration: none;
+        }
+    
+        .container-fluid {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+    
+        #posts-container {
+            padding: 10px 0;
+            height: calc(100vh - 240px); /* Adjust this value based on navbar and create post height */
+            /*overflow-y: scroll;*/
+        }
+    </style>
+    
+    
+    <link href="/css/bootstrap.min.css" rel="stylesheet"> <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .heading {
+            color: #333;
+        }
+        .terms-section h5 {
+            color: #0069d9;
+        }
+        .terms-section p {
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div id="brand-header">RoiTech Education Solution</div>
+            <div id="nav-links">
+                <a href="/login"><i class="fas fa-key"></i> Login</a>
+                <a href="/signup"><i class="fas fa-lock"></i> Sign Up</a>
+                <a href="/about"><i class=""></i> About Us</a>
+                <a href="/contact"><i class=""></i> Contact Us</a>
+                <a href="/faq"><i class=""></i> faq</a>
+                <a href="/terms"><i class=""></i> Terms,Policy and  Procedures</a>
+                <a href="/Policy"><i class=""></i> </a>
+                
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h1 class="heading text-center my-4">ROITECHEDUCATION SOLUTION </h1>
+
+        <div class="terms-section">
+            <h5>1. Acceptance of Terms</h5>
+            <p>By using <strong>ROITECHEDUCATION </strong>, you signify that you agree to these Terms and Conditions and our Privacy Policy. If you do not agree to these terms, please refrain from using the platform.</p>
+        </div>
+
+        <div class="terms-section">
+            <h5>2. User Obligations</h5>
+            <p>Users must adhere to the following obligations:</p>
+            <ul>
+               <li><strong>Appropriate Content:</strong> You may share posts, images, and comments as long as they comply with our content guidelines. Content that promotes hate speech, violence, harassment, discrimination, or explicit content is strictly prohibited.</li>
+                <li><strong>Compliance with Laws:</strong> Users must comply with local laws and regulations of their country of residence. Content violating any laws or regulations will be removed, and the responsible user may face suspension or termination.</li>
+                <li><strong>Accurate Information:</strong> Users must provide truthful and accurate information when registering. Fake profiles with the intent of misleading or harming others are not permitted.</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h5>3. Content Ownership and Usage Rights</h5>
+            <p>You own the rights to the content you create and post on <strong>ROITECHEDUCATION </strong>. However, by posting, you grant <strong>ROITECHEDUCATION </strong> a non-exclusive, royalty-free, worldwide license to use, display, and distribute your content on our platform. <strong>ROITECHEDUCATION </strong> reserves the right to modify, review, or remove any content that violates these terms.</p>
+        </div>
+
+        <div class="terms-section">
+            <h5>4. Prohibited Activities</h5>
+            <p>The following actions are strictly prohibited:</p>
+            <ul>
+                <li>Posting or transmitting false, misleading, or offensive content.</li>
+                <li>Engaging in abusive or harassing behavior toward other users.</li>
+                <li>Attempting to bypass privacy features or gain unauthorized access to other users’ information.</li>
+                <li>Using automated systems (such as bots) to collect information or interact with the platform.</li>
+            </ul>
+        </div>
+
+        <div class="terms-section">
+            <h5>5. Privacy and Data Protection</h5>
+            <p><strong>ROITECHEDUCATION </strong> respects your privacy and is committed to protecting your personal information. We do not require you to disclose your identity to other users. We may collect and store non-personal information for enhancing your experience. We follow local and international data protection regulations and secure your data responsibly.</p>
+        </div>
+
+        <div class="terms-section">
+            <h5>6. Liability and Disclaimer</h5>
+            <p><strong>ROITECHEDUCATION </strong> provides a platform for information exchange and advice sharing but does not verify or guarantee the accuracy of user-generated content. Users must exercise caution when relying on information shared by others. <strong>ROITECHEDUCATION</strong> is not liable for damages arising from misuse of the platform or failure to comply with these terms.</p>
+        </div>
+
+        <div class="terms-section">
+            <h5>7. Account Suspension and Termination</h5>
+            <p><strong>ROITECHEDUCATION </strong> reserves the right to suspend or terminate accounts for violations of these terms or for engaging in illegal or harmful activities. Users will be notified of any account action taken against them.</p>
+        </div>
+
+        <div class="terms-section">
+            <h5>8. Intellectual Property Rights</h5>
+            <p>All intellectual property rights, including trademarks, logos, and content on the <strong>ROITECHEDUCATION</strong> platform, are owned by <strong>ROITECHEDUCATION</strong> or its licensors. Users must not infringe on these rights.</p>
+        </div>
+
+        <div class="terms-section">
+            <h5>9. Governing Law</h5>
+            <p>These Terms and Conditions are governed by and interpreted according to the laws of country. However, by using <strong>ROITECHEDUCATION</strong>, you agree to comply with the laws of your jurisdiction and acknowledge that violations of laws will be subject to enforcement by relevant authorities.</p>
+        </div>
+
+        <div class="terms-section">
+            <h5>10. Amendments and Updates</h5>
+            <p><strong>ROITECHEDUCATION </strong> reserves the right to amend or update these terms at any time. We will notify users of significant changes, and continued use of the platform after changes constitutes acceptance of the revised terms.</p>
+        </div>
+    </div>
+</body>
+</html>
