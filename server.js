@@ -113,7 +113,7 @@ sequelize.authenticate()
     .then(() => console.log("Database connected!"))
     .catch((err) => console.error("Database connection failed:", err));
 
-sequelize.sync({ force: true })
+sequelize.sync({ force: false})
     .then(() => console.log("Database synced successfully."))
     .catch((err) => console.error("Database sync failed:", err));
 
