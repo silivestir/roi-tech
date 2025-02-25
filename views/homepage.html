@@ -1,17 +1,16 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>roitech education solution</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bootstrap.min.css" rel="stylesheet">
-    <link href="bootstrap.css" rel="stylesheet">
-    <script src="jquery.min.js"></script>
-    <script src="bootstrap.min.js"></script>
-    <script src="bootstrap.js"></script>
-    <link href="bootstrap.css" rel="stylesheet"> <style>
+    <!-- Prism.js CSS (for Monokai theme) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet">
 
+    <!-- Custom CSS -->
+    <style>
         body {
             background-color: #f8f9fa;
             margin: 0;
@@ -20,7 +19,6 @@
             display: flex;
             flex-direction: column;
         }
-   
         .navbar {
             position: sticky;
             top: 0;
@@ -28,22 +26,10 @@
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        .create-post-container {
-            position: sticky;
-            top: 70px; /* Adjust based on navbar height */
-            z-index: 1000;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
         .posts-container {
-            /*overflow-y: auto;*/
             flex-grow: 1;
+            padding: 10px 0;
         }
-
         .post {
             background: white;
             border-radius: 10px;
@@ -51,30 +37,18 @@
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             display: flex;
-            align-items: center;
+            flex-direction: column;
         }
-
-        .profile-pic {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 15px;
-            object-fit: cover;
-        }
-
         .post-content {
             flex-grow: 1;
         }
-
         .post-author {
             font-weight: bold;
         }
-
         .post-date, .time-elapsed {
             color: #6c757d;
             font-size: 0.9em;
         }
-
         .create-post-content textarea {
             width: 100%;
             height: 80px;
@@ -84,11 +58,6 @@
             font-size: 1.1rem;
             outline: none;
         }
-
-        .create-post-content textarea:focus {
-            box-shadow: none;
-        }
-
         .create-post-actions {
             display: flex;
             justify-content: space-between;
@@ -96,469 +65,348 @@
             padding-top: 10px;
             border-top: 1px solid #e6e6e6;
         }
-
         .create-post-actions button {
             padding: 6px 12px;
         }
-
         .create-post-options {
             display: flex;
             align-items: center;
         }
-
-        .create-post-options button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #1DA1F2;
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .create-post-options button:hover {
-            color: #007bff;
-        }
-
-
         .read-more {
             cursor: pointer;
             color: #007bff;
             text-decoration: underline;
         }
-        .like,.comment,.report {
-          text-decoration: none;
+        .like, .comment, .report {
+            text-decoration: none;
         }
-
         .container-fluid {
             display: flex;
             flex-direction: column;
             height: 100%;
         }
-
         #posts-container {
-            padding: 10px 0;
-            height: calc(100vh - 240px); /* Adjust this value based on navbar and create post height */
-            /*overflow-y: scroll;*/
+            height: calc(100vh - 240px);
+        }
+
+        /* Monokai inspired code block styling */
+        pre code {
+            background-color: #272822; /* Dark background for Monokai theme */
+            color: #f8f8f2; /* Light text color for code */
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+
+        /* CSS for Copy Button */
+        .copy-btn {
+            margin-top: 10px;
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* CSS for Share Button */
+        .share-btn {
+            margin-top: 10px;
+            padding: 6px 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .share-btn:hover {
+            background-color: #218838;
+        }
+
+        /* CSS for Social Media Icons */
+        .social-share-icons {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1000;
+            width: 150px;
+        }
+
+        .social-share-icons a {
+            padding: 5px;
+            margin: 5px;
+            font-size: 24px; /* Increased size for better visibility */
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .social-share-icons a:hover {
+            color: #0056b3;
+        }
+
+        .social-share-btn {
+            position: relative;
+        }
+
+        .social-share-btn i {
+            font-size: 24px; /* Larger icon size for better visibility */
         }
     </style>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <script src="bootstrap.min.js"></script>
-    <script src="bootstrap.js"></script>
-  </head>
-  <body>
- <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
-  <div class="container">
-    <a class="navbar-brand me-2" href="/homepage">
-      <i class="bi bi-journal-bookmark"></i> roitecheducation
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarButtonsExample" aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarButtonsExample">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="/homepage">
-            <i class="bi bi-house-door"></i> Home
-          </a>
-        </li>
-        <!-- New Nav Links -->
-        <li class="nav-item">
-          <a class="nav-link" href="/profile">
-            <i class="bi bi-person"></i> Profile
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/advert">
-            <i class="bi bi-chat-dots"></i> advertisments
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/realtime-editor">
-            <i class="bi blink-cursor"></i>real time editor
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/pdfy">
-            <i class="bi blink-cursor"></i>share pdf
-          </a>
-        </li>
-      </ul>
-      <div class="d-flex align-items-center">
-        <span id="user-name" class="me-3"></span>
-        <button id="logout" type="button" class="btn btn-danger">
-          <i class="bi bi-box-arrow-right"></i> Logout
-        </button>
-      </div>
-    </div>
-  </div>
-</nav>
-
-    
-    <div class="container mt-4">
-      <h2 class="text-center text-secondary">somethin new! </h2>
-
-     
-
-
-      <!-- Posts Container -->
-      <div id="posts-container" class="posts-container">
-        <!-- Posts will be rendered here by JavaScript -->
-      </div>
-      
-    </div>
-     <!-- Modal for Reporting a Post -->
-     <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="reportModalLabel">Report Post</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>Please select a reason for reporting this post:</p>
-            <select class="form-select" id="report-reason">
-              <option value="explicit-content">Post has sexual/explicit content</option>
-              <option value="vulgar-language">Post uses vulgar language</option>
-              <option value="misogynistic">Post has a misogynistic perspective</option>
-              <option value="child-abuse">Post portrays child abuse</option>
-              <option value="deceptive-content">Post is deceptive to community/government</option>
-            </select>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" id="" class="btn btn-danger submit-report" onclick="submitReport()">Report</button>
-          </div>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand me-2" href="/homepage">
+                <i class="bi bi-journal-bookmark"></i> roitecheducation
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarButtonsExample" aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarButtonsExample">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/homepage">
+                            <i class="bi bi-house-door"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">
+                            <i class="bi bi-person"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/advert">
+                            <i class="bi bi-chat-dots"></i> Advertisements
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <span id="user-name" class="me-3"></span>
+                    <button id="logout" type="button" class="btn btn-danger">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <h2 class="text-center text-secondary">Something New!</h2>
+        <div id="posts-container" class="posts-container">
+            <!-- Posts will be rendered here by JavaScript -->
+        </div>
     </div>
 
-    <!-- Report Modal 
-<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="reportModalLabel">Report Reason</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-         Your report reason content goes here -->
-       <!-- <form>
-          <div class="form-group">
-            <label for="reportReason">Select a reason:</label>
-            <select class="form-control" id="reportReason">
-              <option value="explicit">Sexual/Explicit Content</option>
-              <option value="vulgar">Vulgar Language</option>
-              <option value="misogyny">Misogynistic Perspective</option>
-              <option value="childAbuse">Child Abuse</option>
-              <option value="deceptive">Deceptive to Community/Government</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-danger">Submit Report</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
--->
-
-
-    
-
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="assey2.js"></script>
-    <script src="assey1.js"></script>
-    <script src="filesaver.js"></script>
-    <script src="mycertificate.js"></script>
+    <!-- Prism.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <!-- Custom JS -->
     <script>
-
-  
         // Function to decode JWT token
         function parseJwt(token) {
-          const base64Url = token.split('.')[1];
-          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-          return JSON.parse(atob(base64));
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            return JSON.parse(atob(base64));
         }
 
         // Retrieve the token from localStorage
         const token = localStorage.getItem('token');
 
         if (token) {
-          // Decode the token to get user data
-          const userData = parseJwt(token);
+            // Decode the token to get user data
+            const userData = parseJwt(token);
 
-          // Display the user's username in the navbar
-          document.getElementById('user-name').innerText = `Hi, ${userData.username}`;
+            // Display the user's username in the navbar
+            document.getElementById('user-name').innerText = `Hi, ${userData.username}`;
 
-          // Fetch posts from the server
-          async function fetchPosts() {
-            try {
-                const response = await fetch("../posts", {
-                  method: 'GET',
-                  headers: {
-                    'Authorization': `Bearer ${token}`, // Pass the token for authentication
-                    'Content-Type': 'application/json'
-                  }
-                });
-                const posts = await response.json();
-
-                const postsContainer = document.getElementById('posts-container');
-                postsContainer.innerHTML = ''; // Clear container
-
-                // Loop through posts and create HTML for each post
-                posts.forEach(post => {
-                    if(post.posttype==="advert"){
-  
-                    const postElement = document.createElement('div');
-                    postElement.classList.add('post');
-                  updateLikeList(post.id);
-                    postElement.innerHTML = `
-              <img src="img/roitech.jpg" alt="Profile Picture" class="profile-pic">
-              <div class="post-content">
-                <div class="post-author">${post.User.username} <span class="post-date">- ${new Date(post.createdAt).toLocaleDateString()}</span></div>
-                <p class="post-text " style="color:navy">
-                  ${post.posttitle} 
-                </p>   <p class="post-text " style="color:navy">
-                  ${post.posttype} 
-                </p>  <p class="post-text" data-full-text="${post.content}">
-                ${post.content.substring(0, 100)}... <span class="read-more">Read More</span>
-                </p>
-                 <div class="post-actions">
-                <span class='like-list-${post.id}'></span><a class='like' onclick="toggleLike('${post.id}')"><i class="bi bi-hand-thumbs-up"></i>  Like</a>
-                <a class='comment' href='viewPost.html' data-post-id="${post.id}"><i class="bi bi-chat-dots"></i>comment</a>
-        </div>
-            `;
- 
-                    postsContainer.appendChild(postElement);
-                    
-            }});
-                var post_id=""
-// Function to get post ID and redirect to a new page to view the post by ID
-document.querySelectorAll('.comment').forEach(btn => {
-  btn.addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent the default link behavior
-    
-    const postId = this.getAttribute('data-post-id');
-// Display the fetched postId
-    window.location.href = `viewPost.html?id=${postId}`;
-  });
-});
-
-                // Add event listener for the "Read More" functionality
-                document.querySelectorAll('.read-more').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const postText = this.previousSibling.textContent.trim();
-                        const fullText = this.parentElement.getAttribute('data-full-text');
-                        if (postText.length < fullText.length) {
-                            this.previousSibling.textContent = fullText;
-                            this.textContent = 'Read Less';
-                        } else {
-                            this.previousSibling.textContent = fullText.substring(0, 100) + '... ';
-                            this.textContent = 'Read More';
+            // Fetch posts from the server
+            async function fetchPosts() {
+                try {
+                    const response = await fetch("../posts", {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
                         }
                     });
-                });
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-          }
+                    const posts = await response.json();
 
-          // Fetch posts when the page loads
-          window.onload = fetchPosts;
+                    const postsContainer = document.getElementById('posts-container');
+                    postsContainer.innerHTML = ''; // Clear container
 
-          // Logout function
-          document.getElementById('logout').addEventListener('click', () => {
-            localStorage.removeItem('token'); // Remove the token
-            window.location.href = '/homepage'; // Redirect to login page
-          });
+                    posts.forEach(post => {
+                        if (post.posttype === "advert") {
+                            const postElement = document.createElement('div');
+                            postElement.classList.add('post');
 
-     
+                            // Replace code sections with Prism highlighted code
+                            let content = post.content;
+                            content = content.replace(/<###code###>(.*?)<###code###>/gs, (match, code) => {
+                                return `
+                                    <pre><code class="language-javascript">${code.trim()}</code></pre>
+                                    <button class="copy-btn" onclick="copyToClipboard('${code.trim()}')">Copy</button>
+                                `;
+                            });
 
-        } else {
-          // Redirect to login if no token is found
-          window.location.href = '/notlogedin';
-        }
+                            postElement.innerHTML = `
+                                <div class="post-content">
+                                    <div class="post-author">${post.User.username} <span class="post-date">- ${new Date(post.createdAt).toLocaleDateString()}</span></div>
+                                    <p class="post-text" style="color:navy">${post.posttitle}</p>
+                                    <p class="post-text" style="color:navy">${post.posttype}</p>
+                                    <div class="post-text" data-full-text="${post.content}">
+                                        <span class="short-content">${content.substring(0, 100)}...</span>
+                                        <span class="full-content" style="display: none;">${content}</span>
+                                        <span class="read-more">Read More</span>
+                                    </div>
+                                    <div class="post-actions">
+                                        <span class='like-list-${post.id}'></span><a class='like' onclick="toggleLike('${post.id}')"><i class="bi bi-hand-thumbs-up"></i> Like</a>
+                                        <a class='comment' href='viewPost.html' data-post-id="${post.id}"><i class="bi bi-chat-dots"></i> comment</a>
+                                    </div>
+                                    <!-- Social Share Button -->
+                               <div class="social-share-btn">
+    <button class="share-btn" onclick="toggleShareIcons('${post.id}')">
+        <!-- Share SVG Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+    </button>
+    <div id="social-share-icons-${post.id}" class="social-share-icons">
+        <!-- WhatsApp SVG Icon -->
+        <a href="https://wa.me/?text=https://roitechsolution.onrender.com/post/${post.id}" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path>
+                <path d="M8 12h8"></path>
+                <path d="M12 8v8"></path>
+            </svg>
+        </a>
+        <!-- Instagram SVG Icon -->
+        <a href="https://www.instagram.com/share?url=https://roitechsolution.onrender.com/post/${post.id}" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+        </a>
+        <!-- Facebook SVG Icon -->
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://roitechsolution.onrender.com/post/${post.id}" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+        </a>
+        <!-- LinkedIn SVG Icon -->
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://roitechsolution.onrender.com/post/${post.id}" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+        </a>
+        <!-- TikTok SVG Icon -->
+        <a href="https://www.tiktok.com/share?url=https://roitechsolution.onrender.com/post/${post.id}" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a10 10 0 1 0 10 10"></path>
+                <path d="M8.56 8.56a4 4 0 1 0 5.66 5.66"></path>
+            </svg>
+        </a>
+    </div>
+</div>
 
-      //Like functionality
-      
-      async function toggleLike(postId) {
-            try {
-              const userData = parseJwt(token);
-              
-              const userId=userData.id;
-              const username=userData.username;
-                const response = await fetch(`../likes/posts/`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({postId,userId,username})
-                });
 
-                if (response.ok) {
-                    updateLikeList(postId);
-                } else {
-                    console.error('Error liking post:', response.statusText);
+                                </div>
+                            `;
+
+                            postsContainer.appendChild(postElement);
+                        }
+                    });
+
+                    // Highlight code blocks using Prism.js
+                    setTimeout(() => {
+                        Prism.highlightAll();
+                    }, 100);  // Allow a short delay for DOM updates before highlighting
+
+                    // Add event listener for Read More button
+                    const readMoreButtons = document.querySelectorAll('.read-more');
+                    readMoreButtons.forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const postText = e.target.closest('.post-text');
+                            const shortContent = postText.querySelector('.short-content');
+                            const fullContent = postText.querySelector('.full-content');
+                            const readMore = postText.querySelector('.read-more');
+
+                            if (shortContent.style.display === "none") {
+                                shortContent.style.display = "inline";
+                                fullContent.style.display = "none";
+                                readMore.innerText = "Read More";
+                            } else {
+                                shortContent.style.display = "none";
+                                fullContent.style.display = "inline";
+                                readMore.innerText = "Read Less";
+                            }
+                        });
+                    });
+
+                } catch (error) {
+                    console.error('Error fetching posts:', error);
                 }
-            } catch (error) {
-                console.error('Error liking post:', error);
             }
+
+            // Fetch posts when the page loads
+            window.onload = fetchPosts;
+
+        } else {
+            // Redirect to login if no token is found
+            window.location.href = '/notlogedin';
         }
-let assey_set_assey;
+
+        // Function to toggle social share icons
+        function toggleShareIcons(postId) {
+            const icons = document.getElementById(`social-share-icons-${postId}`);
+            icons.style.display = (icons.style.display === "block") ? "none" : "block";
+        }
+
+        // Function to copy code to clipboard
+        function copyToClipboard(code) {
+            // Create a temporary textarea element
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            document.body.appendChild(textarea);
         
-        async function updateLikeList(postId) {
-    try {
-
-       //alert(`posts id -${postId } `)
-        const response = await fetch(`../likes/posts/${postId}/`, { // Use the correct endpoint
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+            // Select the text in the textarea
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // For mobile devices
+        
+            // Copy the text using the deprecated execCommand method
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    alert('Code copied to clipboard!');
+                } else {
+                    throw new Error('Copy failed');
+                }
+            } catch (err) {
+                console.error('Error copying text: ', err);
+                alert('Failed to copy code');
+            } finally {
+                // Remove the textarea from the DOM
+                document.body.removeChild(textarea);
             }
-        });
-
-        if (response.ok) {
-            const data = await response.json(); // Get the data from the response
-            const likeListElement = document.querySelector(`.like-list-${postId}`);
-            
-            // Assuming the response contains the structure you provided earlier
-            if (data.likeCount >= 0) {
-              const userData = parseJwt(token);
-             assey_set_assey=data.username.username ;
-                likeListElement.innerText =data.likeCount ; // Use the display message from the response
-            } else {
-                likeListElement.innerText += ''; // No likes
-            }
-        } else {
-            console.error('Error fetching likes:', response.statusText);
         }
-    } catch (error) {
-        console.error('Error fetching likes:', error);
-    }
-}
-
-//showing a modal class upon report onclick functionality
-function report(postId,postContent){
-
-
-
-
-  const { PDFDocument, rgb, degrees } = PDFLib;
-
-
-  const userData = parseJwt(token);
-              
-    const val =userData.username;
-
-   
-const generatePDF = async (name) => {
-    const existingPdfBytes = await fetch("asseys.pdf").then((res) =>
-      res.arrayBuffer()
-    );
-
-    // Load a PDFDocument from the existing PDF bytes
-    const pdfDoc = await PDFDocument.load(existingPdfBytes);
-    pdfDoc.registerFontkit(fontkit);
-
-    
-  //get font
-  const fontBytes = await fetch("Sanchez-Regular.ttf").then((res) =>
-  res.arrayBuffer()
-);
-  // Embed our custom font in the document
-  const SanChezFont  = await pdfDoc.embedFont(fontBytes);
-   // Get the first page of the document
-   const pages = pdfDoc.getPages();
-   const firstPage = pages[0];
- 
-      const text=`${postContent}`;
-   // Draw a string of text diagonally across the first page
-   firstPage.drawText(name, {
-     x: 180,
-     y: 364,
-     size: 58,
-     font: SanChezFont ,
-     color: rgb(0.2, 0.84, 0.67),
-   });
-   firstPage.drawText(text, {
-    x:160,
-    y: 320,
-    size: 28,
-    font: SanChezFont ,
-    color: rgb(0.2, 0.84, 0.67),
-  });
-  const cod=`course coordinator`;
-  firstPage.drawText(cod, {
-    x:520,
-    y: 120,
-    size: 28,
-    font: SanChezFont ,
-    color: rgb(0.2, 0.84, 0.67),
-  });
-
-  const coded=`tutor`;
-  firstPage.drawText(coded, {
-    x:120,
-    y: 120,
-    size: 28,
-    font: SanChezFont ,
-    color: rgb(0.2, 0.84, 0.67),
-  });
-
-  
-  // Serialize the PDFDocument to bytes (a Uint8Array)
-  const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
-  saveAs(pdfDataUri,"newcertificate.pdf")
-};
-
-assey_set_assey===val?generatePDF(val):alert("it seem like  you are not  enrolled  yet to that corse " +"  "+postId);
-//generatePDF(val);
-const tarehe=new Date()
-
-}
-
-// Function to handle the "Report" button click
-async function submitReport(){    
-
- // Prevent default link behavior
-//alert(ids)
-    const postId = post_id;
-    // this.getAttribute('data-post-id');
-    const userData = parseJwt(token); // Get user data from the token
-    const userId = userData.id; // Extract the user ID
-   const username=userData.username;
-   //get report reason
- 
-      try {
-        // Send a POST request to report the post
-        const response = await fetch(`../posts/report`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ postId,userId,username }) // Send the userId as part of the body
-        });
-
-        if (response.ok) {
-          alert("Post reported successfully!");
-        } else {
-          console.error('Error reporting post:', response.statusText);
-          alert("Failed to report the post. Please try again later.");
-        }
-      } catch (error) {
-        console.error('Error reporting post:', error);
-        alert("An error occurred while reporting the post. Please try again.");
-      }
-    
- 
-}
     </script>
-  </body>
+</body>
 </html>
